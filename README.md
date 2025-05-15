@@ -109,6 +109,7 @@ The multivariate LSTM model improved the univariate model's ability to capture s
 
 ![alt text](images/image.png)
 ![alt text](images/image-1.png)
+![alt text](images/PHOTO-2025-05-15-23-31-22.jpg)
 
 The autoencoder performed with a R2 of 0.6. Despite unexceptional metrics, we used it for anomaly detection and it seems to work.
 
