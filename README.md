@@ -1,4 +1,6 @@
 # ML-Group-8-Project-Work
+#**Reply: Anomaly detection**
+Flavia Fuscaldi, Giacomo Guerra, Caterina Perrotti
 ## INTRODUCTION
 
  The project, commissioned by Reply SPA, has as its primary objective the definition of a model able to detect and identify abnormal behaviors in system operations.
