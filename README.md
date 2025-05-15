@@ -54,7 +54,7 @@ These features were computed individually for each day before merging, to ensure
 Once the feature engineering was completed, we merged all the synthetic days to form the final dataset used for model training.
 For forecasting, we selected a Long Short-Term Memory (LSTM) neural network due to its proven ability to model sequential dependencies in time series data. The LSTM was configured with an input window of 30 minutes (i.e., the model receives 30 minutes of past data) to predict the next 10 minutes of system behavior.
 Once the model was trained, we evaluated its ability to detect anomalies by testing it on the original dataset, which still included known outliers. This approach was intentional: had we trained directly on the unfiltered data, the model might have learned to treat abnormal patterns as normal, reducing its effectiveness in detecting true anomalies. By separating training (on clean, augmented data) from testing (on the original dataset), we ensured that the model could learn normal behavior and accurately flag deviations. The forecasting-based approach enables anomaly detection by comparing predicted values with actual observations, when the difference (residual) exceeds a predefined threshold, the point is flagged as anomalous. This method reveals the model’s full potential, making it not only a forecasting tool but also a reliable anomaly detection system.
-As we’ll explore in the next sections, we decided to extend our approach by building a multivariate LSTM model.
+As we’ll explore in the next sections, we decided to extend our approach by building a multivariate LSTM model and an LSTM Autoencoder.
 
 
 ## EXPERIMENTAL DESIGN
@@ -98,8 +98,7 @@ By employing multiple inputs and outputs, the multivariate LSTM was designed to 
 Anomalies were again detected using a residual-based approach, this time by computing the multivariate average prediction error across all four target variables for every forecast horizon. A threshold based on a distribution was then utilized to label abnormal intervals.
 This enhanced model exhibited better concordance with the anomaly patterns previously detected by the Isolation Forest, reflecting more comprehensive and consistent detection.
 We then directly compared the anomalies identified by the multivariate LSTM with those found by the Isolation Forest, and observed greater overlap compared to the univariate setting, and verified the value added by multivariate temporal modeling.
-Furthermore, we have tried to build an LSTM autoencoder able to detect anomalies. We have trained it on the data without outliers and then tested it considering the data with the anomalies. 
-
+As a final step, we build an LSTM autoencoder to test the performance of a different model architecture. We used the same setting as before, training on a 30 minute input window and reconstructing a 10 minute reconstruction. The model performed well in detecting anomalies; however, it performed less well in R² terms compared to the sequence-to-sequence LSTM. This is likely due to the fact that the autoencoder has been trained to reconstruct the input rather than directly learn temporal dynamics over time  and thereby becomes less sensitive to fine-grained sequential deviations.
 
 
 ## RESULTS 
@@ -111,9 +110,11 @@ The multivariate LSTM model improved the univariate model's ability to capture s
 
 ![alt text](images/image.png)
 ![alt text](images/image-1.png)
+
+The autoencoder performed with a R2 of 0.657. Despite unexceptional metrics, we used it for anomaly detection and it seems to work:
 ![alt text](images/PHOTO-2025-05-15-23-31-22.jpg)
 
-The autoencoder performed with a R2 of 0.657. Despite unexceptional metrics, we used it for anomaly detection and it seems to work.
+
 
 ## CONCLUSIONS
 
