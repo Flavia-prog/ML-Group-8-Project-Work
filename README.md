@@ -1,5 +1,5 @@
 # ML-Group-8-Project-Work
-#**Reply: Anomaly detection**
+# **Reply: Anomaly detection**
 Flavia Fuscaldi, Giacomo Guerra, Caterina Perrotti
 ## INTRODUCTION
 
