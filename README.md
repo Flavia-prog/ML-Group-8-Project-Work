@@ -85,6 +85,7 @@ Due to the lack of labeled ground truth, common classification metrics such as p
 -	Temporal localisation of anomalies 
 -	Consistency with known anomaly zones (e.g., the 7:00 p.m. spike)
 -	Consistency with Isolation Forest results
+  
 These conditions provided robust qualitative support for the residual-based method and provided the basis for subsequent extension of our approach to a multivariate setting, as discussed in the following section.
 The difference observed between the result of the univariate LSTM and the result obtained through the Isolation Forest indicated the potential benefit of applying a larger number of system metrics. In particular, such measures as “Time_Avg”, “Number_of_Retries”, and “Number_of_Wrong_Transactions” exhibited trends strongly correlated with abnormal behavior, so it appeared probable that a more comprehensive temporal representation would both enhance prediction performance and detect anomalies.
 Encouraged by this insight, our final experiment sought to train a multivariate LSTM model that would learn more complex temporal patterns and relationships between system metrics. The model was implemented as a sequence-to-sequence architecture with the following four variables as inputs and targets:
@@ -92,6 +93,7 @@ Encouraged by this insight, our final experiment sought to train a multivariate 
 -	Time_Avg
 -	Number_of_Retries
 -	Number_of_Wrong_Transactions
+
 By employing multiple inputs and outputs, the multivariate LSTM was designed to identify not just individual trends but also interdependencies between metrics that collectively may indicate systemic anomalies. This allowed the model to predict multiple signals simultaneously and improve its contextualization of anomalies in terms of the overall system state.
 Anomalies were again detected using a residual-based approach, this time by computing the multivariate average prediction error across all four target variables for every forecast horizon. A threshold based on a distribution was then utilized to label abnormal intervals.
 This enhanced model exhibited better concordance with the anomaly patterns previously detected by the Isolation Forest, reflecting more comprehensive and consistent detection.
@@ -111,7 +113,7 @@ The multivariate LSTM model improved the univariate model's ability to capture s
 ![alt text](images/image-1.png)
 ![alt text](images/PHOTO-2025-05-15-23-31-22.jpg)
 
-The autoencoder performed with a R2 of 0.6. Despite unexceptional metrics, we used it for anomaly detection and it seems to work.
+The autoencoder performed with a R2 of 0.657. Despite unexceptional metrics, we used it for anomaly detection and it seems to work.
 
 ## CONCLUSIONS
 
