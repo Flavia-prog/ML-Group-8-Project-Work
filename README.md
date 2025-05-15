@@ -96,23 +96,25 @@ By employing multiple inputs and outputs, the multivariate LSTM was designed to 
 Anomalies were again detected using a residual-based approach, this time by computing the multivariate average prediction error across all four target variables for every forecast horizon. A threshold based on a distribution was then utilized to label abnormal intervals.
 This enhanced model exhibited better concordance with the anomaly patterns previously detected by the Isolation Forest, reflecting more comprehensive and consistent detection.
 We then directly compared the anomalies identified by the multivariate LSTM with those found by the Isolation Forest, and observed greater overlap compared to the univariate setting, and verified the value added by multivariate temporal modeling.
+Furthermore, we have tried to build an LSTM autoencoder able to detect anomalies. We have trained it on the data without outliers and then tested it considering the data with the anomalies. 
+
 
 
 ## RESULTS 
 
 The univariate LSTM model proved to be powerful for capturing unusual behavior in the system with an R2 of 0.91 and an RMSE of 312.82. it shows a better result compared to the prophet forecasting model used as baseline, which records an R² of 0.7459 and a RMSE of 583.63. Anomaly detection based on residuals, obtained using the univariate LSTM model, identifies a set of anomalies, 29% of which are also detected by the Isolation Forest, indicating a partial overlap in detection capabilities.
-The multivariate LSTM model improved the univariate model's ability to capture system expected behavior and detect anomalies more reliably. In particular, the multivariate LSTM model records an R2 of 0.93 and a RMSE of 267.71 for “Number of transactions”. *aggiungere qualcosa sulle anomalies*
+The multivariate LSTM model improved the univariate model's ability to capture system expected behavior and detect anomalies more reliably. In particular, the multivariate LSTM model records an R2 of 0.93 and a RMSE of 267.71 for “Number of transactions”.
 
  
 
 ![alt text](images/image.png)
 ![alt text](images/image-1.png)
 
-
+The autoencoder performed with a R2 of 0.6. Despite unexceptional metrics, we used it for anomaly detection and it seems to work.
 
 ## CONCLUSIONS
 
 Our project results demonstrate that an LSTM forecasting model can effectively detect anomalies in the considered system. Furthermore, when benchmarked against an Isolation Forest LSTM-based forecasting approach, especially the multivariate one, not only identified a similar number of anomalies but also detected them earlier. This makes it well-suited for real-time and proactive monitoring applications. Having taken the anomalies identified by the isolated forest as a reference, we were able to get feedback on making sure that the model detected the correct anomalies. While our results are promising, we should highlight some limitations as well as delineate natural next steps for the direction of future work. 
 Firstly, the dataset we had was relatively small, and our data augmentation strategy relied on simple noise-based injection of a single baseline day. This limits the diversity of training examples and may reduce the model’s ability to generalize to more complex or unexpected patterns. In future work, more advanced augmentation techniques, such as GAN, Variational Autoencoders etc. could help the model better capture temporal variability and realistic fluctuations in system behavior.
-Also, our evaluation of anomaly detection performance was primarily based on known outliers from the original dataset. While the model successfully identified these, we have not yet assessed its robustness to unseen or qualitatively different types of anomalies. A larger sample of test, possibly including synthetic or labeled real-world anomalies, would be necessary to evaluate generalization.
+Also, our evaluation of anomaly detection performance was primarily based on known outliers from the original dataset. While the model successfully identified these, we have not yet assessed its robustness to unseen or qualitatively different types of anomalies. A larger sample of test, possibly including synthetic or labeled real-world anomalies, would be necessary to evaluate generalization. Another point to consider is the enhancement of the LSTM autoencoder we have tried to build. 
 Lastly, the threshold we set, using the 95th percentile of residuals, was a simple and effective starting point. It could be overcome by finding new thresholding strategies, able to adapt to changing conditions. In future versions, exploring dynamic thresholding techniques could improve accuracy, helping reduce false positives in more variable environments.
